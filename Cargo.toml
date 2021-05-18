@@ -1,0 +1,9 @@
+[package]
+name = "rustpack"
+version = "1.0.0"
+authors = ["dezhao.chen<10949221@qq.com>"]
+edition = "2018"
+
+[dependencies]
+rand = "0.5.5"
+regex = "1"
