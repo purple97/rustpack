@@ -1,34 +1,43 @@
 mod build;
-
+mod utils;
 /*  */
-use std::env::current_dir;
-// use std::fs::OpenOptions;
-// use std::io::Read;
-// use regex::Regex::replace_all;
-
+use build::build::{
+  create_module, generate_file, macthing_code_by_modules, modules_to_contents, query_file_template,
+  IModuleInfo,
+};
 use std::collections::HashMap;
-// use std::io::Write;
-use std::path::{Path, PathBuf};
+use std::env::current_dir;
+use std::path::PathBuf;
+use utils::utils::path_join;
 
 fn main() {
-  let mut config: HashMap<&str, String> = HashMap::new();
-  let mut modules = HashMap::new();
+  let mut config: HashMap<&str, &str> = HashMap::new();
+  let modules: Vec<IModuleInfo>;
   let cwd_dir: PathBuf = current_dir().unwrap();
   //
-  config.insert("root", String::from("./"));
-  config.insert("entry", String::from("./index.js"));
-  config.insert("entryPath", String::from("./src/"));
-  config.insert("outputPath", String::from("./dist/"));
-  //
-  modules.insert("name", "dezhao".to_string());
+  config.insert("root", "./");
+  config.insert("entry", "./index.js");
+  config.insert("entryPath", "./src/");
+  config.insert("outputPath", "./example/dist/main.js");
+  println!("config.entry:{}", config.get_mut("entry").unwrap());
   //
   println!("当前目录：{:?}", cwd_dir);
-  println!("config: {:?}", config);
-
-  build::create_module(
-    modules,
-    cwd_dir.join("./example/src/"),
-    // String::from("./example/src/"),
-    String::from("index.js"),
-  )
+  //
+  let new_entry_path = path_join(cwd_dir, "./example/src/");
+  // 导出所有模块
+  modules = create_module(new_entry_path, PathBuf::from("index.js"));
+  // 包裹所有代码，引入(module,exports,require)三个对象;
+  let modules = macthing_code_by_modules(modules);
+  //
+  let mut entry = PathBuf::new();
+  entry.push(config.get_mut("entry").unwrap());
+  // 通过模板组装文件内容;
+  let file_contents = query_file_template(
+    modules_to_contents(modules),
+    entry.to_str().unwrap().to_string(),
+  );
+  // 生成文件
+  let cwd_dir: PathBuf = current_dir().unwrap();
+  let output_file_path = path_join(cwd_dir, config.get_mut("outputPath").unwrap());
+  generate_file(file_contents, output_file_path.to_str().unwrap());
 }
