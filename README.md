@@ -7,7 +7,7 @@
 - 使用 Rust 语音编写一个类似 webpack 的 js 文件打包工具；
   - 只实现打包功能，无 loader、plugin；
 
-## 功能
+## 功能(未实现和已实现的)
 
 - 获取命令行和参数
 - 命令行人机交互
@@ -39,12 +39,12 @@
 
 ```rust
 let f = File::open("./updated_time.txt");
-     let f = match f {
-         Ok(file) => file,
-         Err(error) => {
-             panic!("Problem in opening file: {:?}", error);
-         }
-     };
+let f = match f {
+    Ok(file) => file,
+    Err(error) => {
+        panic!("Problem in opening file: {:?}", error);
+    }
+};
 ```
 
 ### 变量传递
