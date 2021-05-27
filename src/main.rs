@@ -25,7 +25,7 @@ fn main() {
   //
   let new_entry_path = path_join(cwd_dir, "./example/src/");
   // 导出所有模块
-  modules = create_module(new_entry_path, PathBuf::from("index.js"));
+  modules = create_module(new_entry_path, PathBuf::from("./index.js"));
   // 包裹所有代码，引入(module,exports,require)三个对象;
   let modules = macthing_code_by_modules(modules);
   //

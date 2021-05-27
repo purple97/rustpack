@@ -7,7 +7,7 @@ use std::io::{Read, Write};
 use std::path::{Path, PathBuf};
 
 /* 模块信息的数据结构 */
-#[derive(Debug)]
+#[derive(Debug, Clone)]
 pub struct IModuleInfo {
   name: String,
   code: String,
@@ -86,7 +86,7 @@ pub fn create_module(entry_path: PathBuf, entry: PathBuf) -> Vec<IModuleInfo> {
   let new_entry_path = path_join(entry_path, &entry);
   //
   if Path::new(&new_entry_path).is_file() {
-    println!("{} 文件已存在", new_entry_path.display());
+    // println!("{} 文件已存在", new_entry_path.display());
     let module_info: IModuleInfo = create_module_info(&new_entry_path, entry);
     let IModuleInfo { deps, .. } = &module_info;
     // println!("文件{:?}\n module_info\n{:?}", entry, module_info);
@@ -161,12 +161,12 @@ pub fn query_file_template(modules_code: String, entry: String) -> String {
       module.exports,
       module,
       module.exports,
-      __denopack_require__
+      __rustpack_require__
     );
     return module.exports;
   }
   // 入口
-  return __denopack_require__(\"__rustpack_entry__\");
+  return __rustpack_require__(\"__rustpack_entry__\");
 })({__modules__code__});",
   );
   template = template.replace("__rustpack_entry__", &entry);

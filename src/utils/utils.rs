@@ -1,6 +1,7 @@
 use std::collections::HashMap;
 use std::hash::Hash;
 use std::path::PathBuf;
+// use structopt::StructOpt;
 
 /*  */
 fn path_end_slash(_path: PathBuf) -> PathBuf {
@@ -23,6 +24,12 @@ pub fn path_join(path_one: PathBuf, path_two: &str) -> PathBuf {
 pub fn format_path(path: &str) -> String {
   let path = path.replace("\"", "");
   return path;
+}
+
+// #[derive(StructOpt)]
+pub fn get_args() {
+  let args = std::env::args();
+  args;
 }
 
 /*
