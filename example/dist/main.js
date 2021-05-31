@@ -16,13 +16,13 @@
     return module.exports;
   }
   // 入口
-  return __rustpack_require__("./index.js");
+  return __rustpack_require__("index.js");
 })({"./a.js":function(module, exports, __rustpack_require__){
 module.exports = (message) => {
   console.log(message);
 };
 },
-"./index.js":function(module, exports, __rustpack_require__){
+"index.js":function(module, exports, __rustpack_require__){
 const Index = __rustpack_require__("./a.js");
 Index("Hello world!");
 },
