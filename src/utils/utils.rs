@@ -1,7 +1,6 @@
-use std::collections::HashMap;
-use std::hash::Hash;
+// use std::collections::HashMap;
+// use std::hash::Hash;
 use std::path::PathBuf;
-// use structopt::StructOpt;
 
 /*  */
 fn path_end_slash(_path: PathBuf) -> PathBuf {
@@ -23,13 +22,7 @@ pub fn path_join(path_one: PathBuf, path_two: &str) -> PathBuf {
 
 pub fn format_path(path: &str) -> String {
   let path = path.replace("\"", "");
-  return path;
-}
-
-// #[derive(StructOpt)]
-pub fn get_args() {
-  let args = std::env::args();
-  args;
+  path
 }
 
 /*
@@ -41,16 +34,16 @@ pub fn get_args() {
 * second_context.insert("Hey", "There");
 * println!("Generic:\t{}", merge(&first_context, &second_context));
 */
-pub fn merge<K: Hash + Eq + Copy, V: Copy>(
-  first_context: &HashMap<K, V>,
-  second_context: &HashMap<K, V>,
-) -> HashMap<K, V> {
-  let mut new_context = HashMap::new();
-  for (key, value) in first_context.iter() {
-    new_context.insert(*key, *value);
-  }
-  for (key, value) in second_context.iter() {
-    new_context.insert(*key, *value);
-  }
-  new_context
-}
+// pub fn merge<K: Hash + Eq + Copy, V: Copy>(
+//   first_context: &HashMap<K, V>,
+//   second_context: &HashMap<K, V>,
+// ) -> HashMap<K, V> {
+//   let mut new_context = HashMap::new();
+//   for (key, value) in first_context.iter() {
+//     new_context.insert(*key, *value);
+//   }
+//   for (key, value) in second_context.iter() {
+//     new_context.insert(*key, *value);
+//   }
+//   new_context
+// }
